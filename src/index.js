@@ -6,13 +6,14 @@ import { createBrowserHistory } from 'history'
 
 import Login from './components/Login'
 import Signup from './components/Signup'
+import Home from './components/Home'
 
 const history = createBrowserHistory()
 
 const routes = [
     { path: '/login', component: Login, auth: false },
     { path: '/signup', component: Signup, auth: false },
-    { path: '/home', component: null, auth: true }
+    { path: '/home', component: Home, auth: true }
 ]
 
 class App extends Component {
@@ -23,7 +24,12 @@ class App extends Component {
         }
     }
 
+    setCurrentUser(currentUser) {
+        this.setState({ currentUser })
+    }
+
     render() {
+        // <Login changeCurrentUser={this.setCurrentUser.bind(this)} />
         return (
             <Router history={history}>
                 <Switch>
@@ -33,7 +39,8 @@ class App extends Component {
                                 return (
                                     <Route
                                         path={route.path}
-                                        component={route.component}
+                                        render={() => <route.component changeCurrentUser={this.setCurrentUser.bind(this)} />}
+                                        // component={route.component}
                                     />
                                 )
                             else if (route.auth && !this.state.currentUser)
@@ -42,7 +49,8 @@ class App extends Component {
                                 return (
                                     <Route
                                         path={route.path}
-                                        component={route.component}
+                                        render={() => <route.component changeCurrentUser={this.setCurrentUser.bind(this)} />}
+                                        // component={route.component}
                                     />
                                 )
                         })

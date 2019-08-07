@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
 import { login } from '../services/auth.service'
 
 class Login extends Component {
@@ -8,7 +9,8 @@ class Login extends Component {
         const { email, password } = e.target
         login({ email: email.value, password: password.value })
             .then(data => {
-                console.log(data)
+                this.props.changeCurrentUser(data.user)
+                this.props.history.push('/home')
             })
     }
 
@@ -24,4 +26,4 @@ class Login extends Component {
     }
 }
 
-export default Login
+export default withRouter(Login)
