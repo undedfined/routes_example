@@ -1,9 +1,18 @@
-export const login = (credentials) => {
+const API_URL = "http://178.128.190.169:8080"
 
+export function signup(credentials) {
+    return fetch(API_URL + '/signup', {
+        method: 'POST',
+        body: JSON.stringify(credentials),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => response.json())
 }
 
-export const signup = (credentials) => {
-    return fetch('http://localhost:8080/signup', {
+export const login = (credentials) => {
+    return fetch(API_URL + '/login', {
         method: 'POST',
         body: JSON.stringify(credentials),
         headers: {
