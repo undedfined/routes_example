@@ -4,6 +4,8 @@ import ReactDOM from 'react-dom';
 import { Router, Switch, Route, Redirect } from 'react-router-dom'
 import { createBrowserHistory } from 'history'
 
+import { getCurrentUser } from './services/auth.service'
+
 import Login from './components/Login'
 import Signup from './components/Signup'
 import Home from './components/Home'
@@ -24,6 +26,14 @@ class App extends Component {
         }
     }
 
+    componentDidMount() {
+        getCurrentUser()
+            .then(this.setCurrentUser.bind(this))
+            .then(() => {
+                history.push('/home')
+            })
+    }
+
     setCurrentUser(currentUser) {
         this.setState({ currentUser })
     }
@@ -40,7 +50,6 @@ class App extends Component {
                                     <Route
                                         path={route.path}
                                         render={() => <route.component changeCurrentUser={this.setCurrentUser.bind(this)} />}
-                                        // component={route.component}
                                     />
                                 )
                             else if (route.auth && !this.state.currentUser)

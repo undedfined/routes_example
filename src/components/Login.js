@@ -9,6 +9,7 @@ class Login extends Component {
         const { email, password } = e.target
         login({ email: email.value, password: password.value })
             .then(data => {
+                localStorage.setItem('access_token', data.token)
                 this.props.changeCurrentUser(data.user)
                 this.props.history.push('/home')
             })

@@ -21,3 +21,21 @@ export const login = (credentials) => {
     })
         .then(response => response.json())
 }
+
+export const getCurrentUser = () => {
+    const token = localStorage.getItem('access_token')
+    return new Promise((resolve, reject) => {
+        if (token)
+            resolve({ uwu: 'uwu' })
+        else
+            reject(null)
+    })  
+    // return fetch(API_URL + '/logged/user/current', {
+    //     method: 'GET',
+    //     headers: {
+    //         'Authorization': token
+    //     }
+    // })
+    //     .then(response => response.json())
+}
+
